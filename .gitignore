@@ -125,3 +125,6 @@ _[Ss]cripts
 *.ncrunchsolution
 *.dot[Cc]over
 >>>>>>> 5da2f8213d68285b5eb20c32fd583343ad69c201
+*.suo
+*.mdf
+*.ldf

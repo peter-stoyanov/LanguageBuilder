@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LanguageBuilder.Models;
+using PagedList;
 
 namespace LanguageBuilder.Controllers
 {
@@ -15,9 +16,47 @@ namespace LanguageBuilder.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Words
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            return View(db.Words.ToList());
+
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "german_name" : "";
+            //ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            var words = from w in db.Words
+                           select w;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                words = words.Where(w => w.german_name.Contains(searchString));
+                                       //|| w.english_name.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "german_name":
+                    words = words.OrderByDescending(w => w.german_name);
+                    break;
+                default:
+                    words = words.OrderBy(w => w.german_name);
+                    break;
+            }
+
+            int pageSize = 50;
+            int pageNumber = (page ?? 1);
+            return View(words.ToPagedList(pageNumber, pageSize));
+            //return View(db.Words.ToList());
         }
 
         // GET: Words/Details/5
