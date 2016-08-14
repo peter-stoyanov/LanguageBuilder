@@ -1,0 +1,76 @@
+﻿<!--model IEnumerable<LanguageBuilder.Models.DictWord> -->
+@model PagedList.IPagedList<LanguageBuilder.Models.DictWord>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Dictionary";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Dictionary</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@using (Html.BeginForm("Index", "DictWords", FormMethod.Get))
+{
+    <p>
+        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+           Word gender
+        </th>
+        <th>
+            German word
+        </th>
+        <th>
+           English Word
+        </th>
+        <th>
+            Type of speech
+        </th>
+        <th>
+            Conjugation
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.word_gender)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.german_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.english_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.speech_type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.conjugation)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.DictWordID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.DictWordID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.DictWordID })
+        </td>
+    </tr>
+}
+
+</table>
+
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
