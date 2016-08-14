@@ -52,13 +52,13 @@ namespace LanguageBuilder.Migrations
             context.SaveChanges();
 
             var DictWord = new List<DictWord>
-{
-                new DictWord{german_name="Haus",english_name="house"},
-                new DictWord{german_name="Tier",english_name="animal"},
-                new DictWord{german_name="Gesund",english_name="healthy"},
-                new DictWord{german_name="Gesicht",english_name="face"},
+            {
+                            new DictWord{german_name="Haus",english_name="house"},
+                            new DictWord{german_name="Tier",english_name="animal"},
+                            new DictWord{german_name="Gesund",english_name="healthy"},
+                            new DictWord{german_name="Gesicht",english_name="face"},
 
-};
+            };
 
             DictWord.ForEach(s => context.DictWords.AddOrUpdate(p => p.german_name, s));
             context.SaveChanges();

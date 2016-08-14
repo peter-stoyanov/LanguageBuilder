@@ -60,9 +60,10 @@
             @Html.DisplayFor(modelItem => item.conjugation)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.DictWordID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.DictWordID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.DictWordID })
+            @Html.ActionLink("Add", "Add", "UserWords", new { DictWordID=item.DictWordID })
+            <!--Html.ActionLink("Edit", "Edit", new { id=item.DictWordID }) | -->
+            <!--Html.ActionLink("Details", "Details", new { id=item.DictWordID }) | -->
+            <!--Html.ActionLink("Delete", "Delete", new { id=item.DictWordID }) -->
         </td>
     </tr>
 }

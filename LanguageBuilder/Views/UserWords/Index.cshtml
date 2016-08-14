@@ -1,0 +1,58 @@
+﻿@model IEnumerable<LanguageBuilder.Models.UserWord>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DictWord.word_gender)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Student.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Level)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastReview)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NextReview)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DictWord.word_gender)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Student.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Level)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastReview)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NextReview)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.UserWordID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.UserWordID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.UserWordID })
+        </td>
+    </tr>
+}
+
+</table>

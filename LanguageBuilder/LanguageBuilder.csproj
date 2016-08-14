@@ -208,6 +208,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\StudentsController.cs" />
+    <Compile Include="Controllers\UserWordsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -300,6 +301,11 @@
     <Content Include="Views\DictWords\Details.cshtml" />
     <Content Include="Views\DictWords\Edit.cshtml" />
     <Content Include="Views\DictWords\Index.cshtml" />
+    <Content Include="Views\UserWords\Create.cshtml" />
+    <Content Include="Views\UserWords\Delete.cshtml" />
+    <Content Include="Views\UserWords\Details.cshtml" />
+    <Content Include="Views\UserWords\Edit.cshtml" />
+    <Content Include="Views\UserWords\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
