@@ -8,6 +8,47 @@ namespace LanguageBuilder.Migrations
         public override void Up()
         {
             CreateTable(
+                "dbo.DictWords",
+                c => new
+                    {
+                        DictWordID = c.Int(nullable: false, identity: true),
+                        word_gender = c.String(),
+                        german_name = c.String(),
+                        english_name = c.String(),
+                        speech_type = c.String(),
+                        conjugation = c.String(),
+                    })
+                .PrimaryKey(t => t.DictWordID);
+            
+            CreateTable(
+                "dbo.UserWords",
+                c => new
+                    {
+                        UserWordID = c.Int(nullable: false, identity: true),
+                        DictWordID = c.Int(nullable: false),
+                        StudentID = c.Int(nullable: false),
+                        Level = c.Int(nullable: false),
+                        LastReview = c.DateTime(nullable: false),
+                        NextReview = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.UserWordID)
+                .ForeignKey("dbo.DictWords", t => t.DictWordID, cascadeDelete: true)
+                .ForeignKey("dbo.Students", t => t.StudentID, cascadeDelete: true)
+                .Index(t => t.DictWordID)
+                .Index(t => t.StudentID);
+            
+            CreateTable(
+                "dbo.Students",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        LastName = c.String(),
+                        FirstMidName = c.String(),
+                        EnrollmentDate = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID);
+            
+            CreateTable(
                 "dbo.AspNetRoles",
                 c => new
                     {
@@ -75,19 +116,6 @@ namespace LanguageBuilder.Migrations
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId);
             
-            CreateTable(
-                "dbo.Words",
-                c => new
-                    {
-                        ID = c.Int(nullable: false, identity: true),
-                        word_gender = c.String(),
-                        conjugation = c.String(),
-                        speech_part = c.String(),
-                        german_name = c.String(nullable: false),
-                        english_name = c.String(nullable: false),
-                    })
-                .PrimaryKey(t => t.ID);
-            
         }
         
         public override void Down()
@@ -96,18 +124,24 @@ namespace LanguageBuilder.Migrations
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.UserWords", "StudentID", "dbo.Students");
+            DropForeignKey("dbo.UserWords", "DictWordID", "dbo.DictWords");
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
-            DropTable("dbo.Words");
+            DropIndex("dbo.UserWords", new[] { "StudentID" });
+            DropIndex("dbo.UserWords", new[] { "DictWordID" });
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.Students");
+            DropTable("dbo.UserWords");
+            DropTable("dbo.DictWords");
         }
     }
 }
