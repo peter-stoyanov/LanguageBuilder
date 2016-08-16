@@ -24,21 +24,3 @@ textarea {
 }
 
 /* overwrite the bootstrap*/
-
-.navbar-inverse {
-    background-color: #ff4342;
-    border-color: #080808;
-}
-
-body {
-    font-family: 'Raleway', sans-serif;
-   
-}
-
-.navbar-inverse .navbar-nav > li > a {
-    color: #ffffff;
-}
-
-.navbar-inverse .navbar-brand {
-    color: #ffffff;
-}

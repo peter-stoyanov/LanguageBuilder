@@ -107,7 +107,8 @@ namespace LanguageBuilder.Migrations
                     context.UserWords.Add(e);
                 }
             }
-            context.SaveChanges();
+            context.SaveChanges();
+
         }
     }
 }

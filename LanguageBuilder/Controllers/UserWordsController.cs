@@ -100,14 +100,15 @@ namespace LanguageBuilder.Controllers
 
         //POST my Add method
         
-        public ActionResult Add()
+        public ActionResult Add(int id)
         {
             var newEntry = new UserWord 
             {
                 //StudentID = students.Single(s => s.LastName == "Alexander").ID,
                 //DictWordID = DictWord.Single(c => c.german_name == "Haus").DictWordID,
                 StudentID = 4,
-                DictWordID = 10,
+                //db.UserProfiles.Single(a => a.UserName == User.Identity.Name);
+                DictWordID = id,
                 Level = 1,
                 LastReview = DateTime.Now,
                 NextReview = DateTime.Now.AddDays(3)
