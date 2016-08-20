@@ -102,11 +102,16 @@ namespace LanguageBuilder.Controllers
         
         public ActionResult Add(int id)
         {
+
+            //string LoggedInID = HttpContext.Current.User.Identity.GetUserId();
+            string LoggedInID = HttpContext.User.Identity.Name;
+            int studentID = db.Students.Single(s => s.UserCrossID.CompareTo(LoggedInID) == 0).ID;
+
             var newEntry = new UserWord 
             {
                 //StudentID = students.Single(s => s.LastName == "Alexander").ID,
                 //DictWordID = DictWord.Single(c => c.german_name == "Haus").DictWordID,
-                StudentID = 4,
+                StudentID = studentID,
                 //db.UserProfiles.Single(a => a.UserName == User.Identity.Name);
                 DictWordID = id,
                 Level = 1,

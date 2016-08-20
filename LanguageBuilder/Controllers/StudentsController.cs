@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LanguageBuilder.Models;
+using System.Web.Security;
+using Microsoft.AspNet.Identity;
 
 namespace LanguageBuilder.Controllers
 {
@@ -28,6 +30,16 @@ namespace LanguageBuilder.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Student student = db.Students.Find(id);
+
+            var numberOfWords = (from n in db.UserWords
+                                 where n.StudentID == id
+                                 select n).ToList();
+            var count = numberOfWords.Count;
+            ViewBag.Count = count;
+
+
+
+
             if (student == null)
             {
                 return HttpNotFound();
@@ -54,6 +66,14 @@ namespace LanguageBuilder.Controllers
                 if (ModelState.IsValid)
                 {
                     db.Students.Add(student);
+                    //var currentUser = Membership.GetUser(User.Identity.Name);
+                    //string username = currentUser.UserName; //** get UserName
+                   // string userEmail = currentUser.UserName; //** get user ID
+                    string userId = User.Identity.Name;
+                    //db.Users.Single(a => a.UserName == User.Identity.Name);
+                    student.UserCrossID = userId;
+                    //Console.WriteLine(userEmail);
+
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
@@ -78,7 +98,8 @@ namespace LanguageBuilder.Controllers
             {
                 return HttpNotFound();
             }
-        
+            
+
             return View(student);
         }
 
