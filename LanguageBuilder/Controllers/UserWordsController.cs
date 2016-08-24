@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LanguageBuilder.Models;
+using PagedList;
 
 namespace LanguageBuilder.Controllers
 {
@@ -14,6 +15,39 @@ namespace LanguageBuilder.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        //Review
+        [Authorize]
+        public ActionResult Review(int? page)
+        {
+                        
+            //string LoggedInID = HttpContext.Current.User.Identity.GetUserId();
+            string LoggedInID = HttpContext.User.Identity.Name;
+            int studentID = db.Students.Single(s => s.UserCrossID.CompareTo(LoggedInID) == 0).ID;
+
+            var userWords = db.UserWords.Include(u => u.DictWord).Include(u => u.Student);
+            //Student student = db.Students.Find(studentID);
+
+            var personalWords = (from n in userWords
+                                 where n.StudentID == studentID
+                                 where n.NextReview <= DateTime.Now
+                                 select n);
+            personalWords = personalWords.OrderByDescending(w => w.NextReview);
+            
+            //when proper page size when pressed 2 page it redisrects to 2 page of UserWords view, not Review
+            int pageSize = 500;
+            int pageNumber = (page ?? 1);
+            return View(personalWords.ToPagedList(pageNumber, pageSize));
+            
+                        
+        }
+        
+        
+        
+        
+        
+        
+        
+        
         // GET: UserWords
         public ActionResult Index()
         {
@@ -99,7 +133,7 @@ namespace LanguageBuilder.Controllers
         }
 
         //POST my Add method
-        
+        [Authorize]
         public ActionResult Add(int id)
         {
 
@@ -116,7 +150,7 @@ namespace LanguageBuilder.Controllers
                 DictWordID = id,
                 Level = 1,
                 LastReview = DateTime.Now,
-                NextReview = DateTime.Now.AddDays(3)
+                NextReview = DateTime.Now.AddDays(1)
 
             };
             db.UserWords.Add(newEntry);
@@ -130,6 +164,102 @@ namespace LanguageBuilder.Controllers
         }
 
 
+        
+        public ActionResult LevelUp(int id)
+        {
+
+            //passed param is UserWordID
+            string LoggedInID = HttpContext.User.Identity.Name;
+            int studentID = db.Students.Single(s => s.UserCrossID.CompareTo(LoggedInID) == 0).ID;
+
+            var currentWord = db.UserWords.Single(w => w.UserWordID == id);
+
+            var oldLevel = currentWord.Level;
+            switch (oldLevel)
+            {
+                case 1:
+                    currentWord.Level++;
+                    currentWord.NextReview = DateTime.Now.AddDays(1);
+                    break;
+                case 2:
+                    currentWord.Level++;
+                    currentWord.NextReview = DateTime.Now.AddDays(5);
+                    break;
+                case 3:
+                    currentWord.Level++;
+                    currentWord.NextReview = DateTime.Now.AddDays(10);
+                    break;
+                case 4:
+                    currentWord.Level++;
+                    currentWord.NextReview = DateTime.Now.AddDays(30);
+                    break;
+                case 5:
+                    currentWord.Level++;
+                    currentWord.NextReview = DateTime.Now.AddDays(60);
+                    break;
+                case 6:
+                    currentWord.NextReview = DateTime.Now.AddDays(120);
+                    break;
+
+                default:
+                    currentWord.Level = 1;
+                    currentWord.NextReview = DateTime.Now.AddDays(1);
+                    break;
+            }
+
+            currentWord.LastReview = DateTime.Now;
+            
+            db.SaveChanges();
+
+
+
+
+            return RedirectToAction("Review", "UserWords");
+
+
+        }
+
+
+        public ActionResult LevelDown(int id)
+        {
+
+            //passed param is UserWordID
+            string LoggedInID = HttpContext.User.Identity.Name;
+            int studentID = db.Students.Single(s => s.UserCrossID.CompareTo(LoggedInID) == 0).ID;
+
+            var currentWord = db.UserWords.Single(w => w.UserWordID == id);
+
+            var oldLevel = currentWord.Level;
+            switch (oldLevel)
+            {
+                case 6:
+                case 5:
+                case 4:
+                case 3:
+                case 2:
+                    currentWord.Level--;
+                    currentWord.NextReview = DateTime.Now.AddDays(1);
+                    break;
+                case 1:
+                    currentWord.NextReview = DateTime.Now.AddDays(1);
+                    break;
+                default:
+                    currentWord.Level = 1;
+                    currentWord.NextReview = DateTime.Now.AddDays(1);
+                    break;
+            }
+
+            currentWord.LastReview = DateTime.Now;
+
+            db.SaveChanges();
+
+
+
+
+            return RedirectToAction("Review", "UserWords");
+
+
+        }
 
 
 

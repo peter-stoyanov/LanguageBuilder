@@ -23,12 +23,15 @@ namespace LanguageBuilder.Controllers
         }
 
         // GET: Students/Details/5
-        public ActionResult Details(int? id)
+        [Authorize]
+        public ActionResult Details()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            
+            string LoggedInID = HttpContext.User.Identity.Name;
+            int id = db.Students.Single(s => s.UserCrossID.CompareTo(LoggedInID) == 0).ID;
+            
+
+           
             Student student = db.Students.Find(id);
 
             var numberOfWords = (from n in db.UserWords
@@ -58,7 +61,7 @@ namespace LanguageBuilder.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "LastName,FirstMidName,EnrollmentDate")] Student student)
+        public ActionResult Create([Bind(Include = "LastName,FirstMidName")] Student student)
         {
 
             try
@@ -66,16 +69,13 @@ namespace LanguageBuilder.Controllers
                 if (ModelState.IsValid)
                 {
                     db.Students.Add(student);
-                    //var currentUser = Membership.GetUser(User.Identity.Name);
-                    //string username = currentUser.UserName; //** get UserName
-                   // string userEmail = currentUser.UserName; //** get user ID
+                    
                     string userId = User.Identity.Name;
-                    //db.Users.Single(a => a.UserName == User.Identity.Name);
                     student.UserCrossID = userId;
-                    //Console.WriteLine(userEmail);
+                    student.EnrollmentDate = DateTime.Now;
 
                     db.SaveChanges();
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Details","Students");
                 }
             }
             catch (DataException /* dex */)

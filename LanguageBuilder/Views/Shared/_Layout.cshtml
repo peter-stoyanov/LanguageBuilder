@@ -8,8 +8,15 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
+    
+    
+    <link rel="icon" href="~/Images/favicon.ico" type="image/x-icon" />
+    
 </head>
 <body>
+    <div id="overlay">
+
+    </div>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -24,6 +31,9 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Profile", "Details", "Students")</li>
+                    <li>@Html.ActionLink("Dictionary", "Index", "DictWords")</li>
+                    <li>@Html.ActionLink("Review", "Review", "UserWords")</li>
                     
                 </ul>
                 @Html.Partial("_LoginPartial")
@@ -41,5 +51,6 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+   
 </body>
 </html>
