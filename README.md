@@ -10,8 +10,9 @@ in order to exploit the psychological spacing effect and commit the new material
 
 Technology stack : C# + ASP.NET MVC + Entity Framework + SQL Server + HTML + CSS.
 
-The project implements: 
-• User registration / profiles / login / logout.
-• Learn new vocabulary - choose words by tag / create your own words
-• Review/train vocabulary
-• See Progress/Compare/Share
+The project implements:
+
+- User registration / profiles / login / logout
+- Search for words in a dictionary
+- Add words into personal dictionary
+- Review the words based on knowledge level and intelligent time span between each review
