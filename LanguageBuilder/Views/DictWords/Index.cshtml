@@ -10,25 +10,35 @@
 
 <h2>Dictionary</h2>
 
+<div class="row">
+    <div class="col-lg-6">
+        @using (Html.BeginForm("Index", "DictWords", FormMethod.Get))
+        {
+            <p>
+                Search for: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+               
+                <input type="submit" class="btn btn-primary" value="Go!" />
+            </p>
+        }
+    </div>
+    <div class="col-lg-6">
+        <input type="button" class="btn btn-primary pull-right" value="Create new dictionary entry" onclick="location.href='@Url.Action("Create", "DictWords")'" />
+    </div>
+</div>
 
-@using (Html.BeginForm("Index", "DictWords", FormMethod.Get))
-{
-    <p>
-        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-        <input type="submit" value="Search" />
-    </p>
-}
 
-<table class="table">
+<p>&nbsp;</p>
+
+<table class="table table-bordered table-hover">
     <tr>
         <th>
-           Word gender
+            Word gender
         </th>
         <th>
             German word
         </th>
         <th>
-           English Word
+            English Word
         </th>
         <th>
             Type of speech
@@ -39,32 +49,33 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.word_gender)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.german_name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.english_name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.speech_type)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.conjugation)
-        </td>
-        <td>
-            <!--Html.ActionLink("Add", "Add", "UserWords", new { id = item.DictWordID })-->
-            <input type="button" value="Add" onclick="location.href='@Url.Action("Add", "UserWords", new { id = item.DictWordID })'" />
-            <!--Html.ActionLink("Edit", "Edit", new { id=item.DictWordID }) | -->
-            <!--Html.ActionLink("Details", "Details", new { id=item.DictWordID }) | -->
-            <!--Html.ActionLink("Delete", "Delete", new { id=item.DictWordID }) -->
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.word_gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.german_name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.english_name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.speech_type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.conjugation)
+            </td>
+            <td>
+                <!--Html.ActionLink("Add", "Add", "UserWords", new { id = item.DictWordID })-->
+                <input type="button" class="btn btn-primary" value="Add" onclick="location.href='@Url.Action("Add", "UserWords", new { id = item.DictWordID })'" />
+                <!--Html.ActionLink("Edit", "Edit", new { id=item.DictWordID }) | -->
+                <!--Html.ActionLink("Details", "Details", new { id=item.DictWordID }) | -->
+                <!--Html.ActionLink("Delete", "Delete", new { id=item.DictWordID }) -->
+            </td>
+        </tr>
+    }
 
 </table>
 

@@ -5,19 +5,19 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Create</h2>
+<h2>Create new dictionary entry</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>DictWord</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.word_gender, htmlAttributes: new { @class = "control-label col-md-2" })
+            <p> Word gender </p>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.word_gender, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.word_gender, "", new { @class = "text-danger" })
@@ -25,7 +25,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.german_name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <p> German name </p>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.german_name, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.german_name, "", new { @class = "text-danger" })
@@ -33,7 +33,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.english_name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <p> English name </p>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.english_name, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.english_name, "", new { @class = "text-danger" })
@@ -41,7 +41,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.speech_type, htmlAttributes: new { @class = "control-label col-md-2" })
+            <p> Speech type </p>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.speech_type, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.speech_type, "", new { @class = "text-danger" })
@@ -49,7 +49,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.conjugation, htmlAttributes: new { @class = "control-label col-md-2" })
+            <p> Conjugation </p>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.conjugation, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.conjugation, "", new { @class = "text-danger" })

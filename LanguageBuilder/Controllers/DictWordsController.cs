@@ -76,6 +76,7 @@ namespace LanguageBuilder.Controllers
         }
 
         // GET: DictWords/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -85,14 +86,25 @@ namespace LanguageBuilder.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "DictWordID,word_gender,german_name,english_name,speech_type,conjugation")] DictWord dictWord)
+        public ActionResult Create([Bind(Include = "word_gender,german_name,english_name,speech_type,conjugation")] DictWord dictWord)
         {
             if (ModelState.IsValid)
             {
+
+                db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[DictWords] ON");
+
                 db.DictWords.Add(dictWord);
                 db.SaveChanges();
+
+                db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[DictWords] OFF");
+
+
                 return RedirectToAction("Index");
+
+
+
             }
 
             return View(dictWord);

@@ -204,6 +204,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DictWords1Controller.cs" />
     <Compile Include="Controllers\DictWordsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -320,6 +321,11 @@
     <Content Include="Views\UserWords\Edit.cshtml" />
     <Content Include="Views\UserWords\Index.cshtml" />
     <Content Include="Views\UserWords\Review.cshtml" />
+    <Content Include="Views\DictWords1\Create.cshtml" />
+    <Content Include="Views\DictWords1\Delete.cshtml" />
+    <Content Include="Views\DictWords1\Details.cshtml" />
+    <Content Include="Views\DictWords1\Edit.cshtml" />
+    <Content Include="Views\DictWords1\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
