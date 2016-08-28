@@ -96,6 +96,7 @@ namespace LanguageBuilder.Controllers
                 db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[DictWords] ON");
 
                 db.DictWords.Add(dictWord);
+
                 db.SaveChanges();
 
                 db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[DictWords] OFF");
